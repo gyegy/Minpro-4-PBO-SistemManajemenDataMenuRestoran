@@ -1,25 +1,22 @@
 package controller;
 
+import dao.RestoranDAO;
+import java.util.List;
 import model.Kategori;
 import model.Menu;
 import model.MenuMakanan;
 import model.MenuMinuman;
-import model.Restoran;
 import view.RestoranView;
 
-public class RestoranController {
+    public class RestoranController {
 
-    private final Restoran restoran;
-    private final RestoranView view;
+        private final RestoranView view;
+        private final RestoranDAO restoranDAO;
 
-    public RestoranController(
-            Restoran restoran,
-            RestoranView view) {
+        public RestoranController(RestoranView view) {
 
-        this.restoran = restoran;
         this.view = view;
-
-        inisialisasiDataAwal();
+        this.restoranDAO = new RestoranDAO();
     }
 
     public void jalankanProgram() {
@@ -54,9 +51,7 @@ public class RestoranController {
 
                     berjalan = false;
 
-                    view.tampilkanPesan(
-                            "Program selesai. Terima kasih"
-                    );
+                    view.tampilkanPesan("Program selesai. Terima kasih");
                 }
 
                 case 8 -> hitungHargaSetelahDiskon();
@@ -65,44 +60,7 @@ public class RestoranController {
 
         view.tutupScanner();
     }
-
-    private void inisialisasiDataAwal() {
-
-        Kategori kategoriMakanan = new Kategori(
-                "K001",
-                "Makanan",
-                "Kategori makanan restoran"
-        );
-
-        Kategori kategoriMinuman = new Kategori(
-                "K002",
-                "Minuman",
-                "Kategori minuman restoran"
-        );
-
-        restoran.tambahKategori(kategoriMakanan);
-        restoran.tambahKategori(kategoriMinuman);
-
-        Menu makananAwal = new MenuMakanan(
-                "M001",
-                "Nasi Goreng",
-                kategoriMakanan,
-                25000,
-                "Makanan Nusantara"
-        );
-
-        Menu minumanAwal = new MenuMinuman(
-                "M002",
-                "Es Teh",
-                kategoriMinuman,
-                8000,
-                "Minuman Dingin"
-        );
-
-        restoran.tambahMenu(makananAwal);
-        restoran.tambahMenu(minumanAwal);
-    }
-
+  
     private void tambahKategori() {
 
         view.tampilkanJudul("TAMBAH KATEGORI");
@@ -117,27 +75,26 @@ public class RestoranController {
                 deskripsi
         );
 
-        if (restoran.tambahKategori(kategoriBaru)) {
+        if (restoranDAO.tambahKategori(kategoriBaru)) {
 
-            view.tampilkanPesan(
-                    "Kategori berhasil ditambahkan"
-            );
+            view.tampilkanPesan("Kategori berhasil ditambahkan ke database");
 
         } else {
 
-            view.tampilkanPesan(
-                    "ID Kategori sudah digunakan"
-            );
+            view.tampilkanPesan("Kategori gagal ditambahkan ke database");
         }
-    }
+    }   
 
-    private void tampilkanKategori() {
+
+
+        private void tampilkanKategori() {
 
         view.tampilkanDaftarKategori(
-                restoran.getDaftarKategori()
+                restoranDAO.getAllKategori()
         );
     }
 
+    
     private void tambahMenu() {
 
         view.tampilkanJudul("TAMBAH MENU");
@@ -192,49 +149,43 @@ public class RestoranController {
             );
         }
 
-        if (restoran.tambahMenu(menuBaru)) {
+        if (restoranDAO.tambahMenu(menuBaru)) {
 
-            view.tampilkanPesan(
-                    "Menu berhasil ditambahkan"
-            );
+            view.tampilkanPesan("Menu berhasil ditambahkan ke database");
 
         } else {
 
-            view.tampilkanPesan(
-                    "ID Menu sudah digunakan"
-            );
+            view.tampilkanPesan("Menu gagal ditambahkan ke database");
         }
     }
+
 
     private void tampilkanMenu() {
 
         view.tampilkanDaftarMenu(
-                restoran.getDaftarMenu()
+                restoranDAO.getAllMenu()
         );
     }
 
+    
     private void updateMenu() {
 
         view.tampilkanJudul("UPDATE MENU");
 
         String idTarget = view.inputString("Masukkan ID Menu: ");
 
-        Menu menu = restoran.cariMenu(idTarget);
+        Menu menu = restoranDAO.getMenuById(idTarget);
 
         if (menu == null) {
 
-            view.tampilkanPesan(
-                    "Menu tidak ditemukan"
-            );
+            view.tampilkanPesan("Menu tidak ditemukan di database");
 
             return;
         }
 
         view.tampilkanMenuSaatIni(menu);
 
-        String namaBaru = view.inputString(
-                "Nama Menu Baru: "
-        );
+        String namaBaru = view.inputString("Nama Menu Baru: ");
 
         Kategori kategoriBaru = pilihKategori();
 
@@ -244,40 +195,34 @@ public class RestoranController {
 
         double hargaBaru = view.inputHarga("Harga Baru: ");
 
-        String jenisBaru;
+        String detailJenis;
 
         if (menu instanceof MenuMakanan) {
 
-            jenisBaru = view.inputString(
-                    "Jenis Makanan Baru: "
-            );
+            detailJenis = view.inputString("Jenis Makanan Baru: ");
 
         } else {
 
-            jenisBaru = view.inputString(
-                    "Jenis Minuman Baru: "
-            );
+            detailJenis = view.inputString("Jenis Minuman Baru: ");
         }
 
-        if (restoran.updateMenu(
+        if (restoranDAO.updateMenu(
                 idTarget,
                 namaBaru,
                 kategoriBaru,
                 hargaBaru,
-                jenisBaru
+                detailJenis
         )) {
 
-            view.tampilkanPesan(
-                    "Menu berhasil diperbarui"
-            );
+            view.tampilkanPesan("Menu berhasil diperbarui di database" );
 
         } else {
 
-            view.tampilkanPesan(
-                    "Menu gagal diperbarui"
-            );
+            view.tampilkanPesan("Menu gagal diperbarui di database");
         }
     }
+
+
 
     private void hapusMenu() {
 
@@ -285,48 +230,38 @@ public class RestoranController {
 
         String idTarget = view.inputString("Masukkan ID Menu: ");
 
-        if (restoran.hapusMenu(idTarget)) {
+        if (restoranDAO.hapusMenu(idTarget)) {
 
-            view.tampilkanPesan(
-                    "Menu berhasil dihapus"
-            );
+            view.tampilkanPesan("Menu berhasil dihapus dari database");
 
         } else {
 
-            view.tampilkanPesan(
-                    "Menu tidak ditemukan"
-            );
+            view.tampilkanPesan("Menu gagal dihapus. "+ "Pastikan ID menu tersedia.");
         }
     }
 
+
+    
     private void hitungHargaSetelahDiskon() {
 
-        view.tampilkanJudul(
-                "HITUNG HARGA SETELAH DISKON"
-        );
+        view.tampilkanJudul("HITUNG HARGA SETELAH DISKON");
 
         String idMenu = view.inputString("Masukkan ID Menu: ");
 
-        Menu menu = restoran.cariMenu(idMenu);
+        Menu menu = restoranDAO.getMenuById(idMenu);
 
         if (menu == null) {
 
-            view.tampilkanPesan(
-                    "Menu tidak ditemukan"
-            );
+            view.tampilkanPesan("Menu tidak ditemukan di database");
 
             return;
         }
 
         double hargaNormal = menu.hitungHargaSetelahDiskon();
 
-        double persentaseDiskon = view.inputPersentase(
-                "Persentase Diskon (%): "
-        );
+        double persentaseDiskon = view.inputPersentase("Persentase Diskon (%): ");
 
-        double hargaAkhir = menu.hitungHargaSetelahDiskon(
-                persentaseDiskon
-        );
+        double hargaAkhir = menu.hitungHargaSetelahDiskon(persentaseDiskon);
 
         view.tampilkanHasilDiskon(
                 menu,
@@ -335,34 +270,31 @@ public class RestoranController {
                 hargaAkhir
         );
     }
-
+    
     private Kategori pilihKategori() {
 
-        if (restoran.getDaftarKategori().isEmpty()) {
+        List<Kategori> daftarKategori = restoranDAO.getAllKategori();
 
-            view.tampilkanPesan(
-                    "Belum ada kategori. "
-                    + "Tambahkan kategori terlebih dahulu."
-            );
+        if (daftarKategori.isEmpty()) {
+
+            view.tampilkanPesan("Belum ada kategori di database. "+ "Tambahkan kategori terlebih dahulu.");
 
             return null;
         }
 
-        view.tampilkanPilihanKategori(
-                restoran.getDaftarKategori()
-        );
+        view.tampilkanPilihanKategori(daftarKategori);
 
         String idKategori = view.inputString("ID Kategori: ");
 
-        Kategori kategori = restoran.cariKategori(idKategori);
+        for (Kategori kategori : daftarKategori) {
 
-        if (kategori == null) {
-
-            view.tampilkanPesan(
-                    "Kategori tidak ditemukan"
-            );
+            if (kategori.getIdKategori().equalsIgnoreCase(idKategori)) {
+                return kategori;
+            }
         }
 
-        return kategori;
+        view.tampilkanPesan("Kategori tidak ditemukan");
+
+        return null;
     }
 }
