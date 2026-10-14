@@ -1115,67 +1115,67 @@ Pesan kegagalan tersebut dapat membantu proses pemeriksaan ketika terjadi kesala
 
 Bagian ini digunakan untuk menunjukkan hasil implementasi program Mini Project 4.
 
-Dokumentasi sebaiknya berupa screenshot hasil pengujian terbaru setelah fitur terhubung dengan database MySQL. Screenshot dari Mini Project 3 sebaiknya tidak digunakan sebagai bukti integrasi database karena belum menunjukkan operasi pada versi ini.
-
 ### 11.1 Tampilan Menu Utama
 
 Menunjukkan menu utama program yang menampilkan seluruh pilihan operasi.
 
-**Dokumentasi:** Tambahkan screenshot tampilan menu utama Mini Project 4.
+<img width="435" height="261" alt="image" src="https://github.com/user-attachments/assets/b454a263-cf7e-472b-bcc4-f4c33424a61e" />
 
 ### 11.2 Pengujian Koneksi Database
 
 Menunjukkan hasil pengujian koneksi menggunakan class `TestKoneksi`.
 
-**Dokumentasi:** Tambahkan screenshot console dengan hasil `Koneksi Berhasil`.
+<img width="1507" height="537" alt="image" src="https://github.com/user-attachments/assets/4da62f83-d11a-471d-870a-a92f1b73bd17" />
 
 ### 11.3 Menampilkan Kategori dari MySQL
 
 Menunjukkan bahwa daftar kategori diperoleh dari tabel `kategori`.
 
-**Dokumentasi:** Tambahkan screenshot fitur tampil kategori beserta data yang tersimpan di database.
+<img width="521" height="716" alt="image" src="https://github.com/user-attachments/assets/f655a072-38be-46d4-9593-4f7c629be218" />
 
 ### 11.4 Menambahkan Kategori
 
 Menunjukkan proses menambahkan kategori melalui aplikasi dan hasil penyimpanannya ke tabel `kategori`.
 
-**Dokumentasi:** Tambahkan screenshot proses tambah kategori dan hasil query pada phpMyAdmin.
+<img width="487" height="431" alt="image" src="https://github.com/user-attachments/assets/583c3e5c-f328-4b3d-9667-62c687dec06f" />
+
+<img width="475" height="555" alt="image" src="https://github.com/user-attachments/assets/7628d07b-bc93-403a-aa90-0ac6d627052d" />
 
 ### 11.5 Menampilkan Menu dari MySQL
 
 Menunjukkan data menu yang diambil dari tabel `menu` dan nama kategori yang diperoleh melalui relasi tabel.
 
-**Dokumentasi:** Tambahkan screenshot fitur tampil menu.
+<img width="457" height="770" alt="image" src="https://github.com/user-attachments/assets/8f544829-10d8-4fa3-b494-4c9eeed7ba22" />
 
 ### 11.6 Menambahkan Menu
 
 Menunjukkan proses menambahkan menu makanan atau minuman dan hasil penyimpanannya ke database.
 
-**Dokumentasi:** Tambahkan screenshot proses tambah menu dan hasil data pada tabel `menu`.
+<img width="473" height="792" alt="image" src="https://github.com/user-attachments/assets/d7505676-6869-4b80-9cfd-e3a57203fa88" />
 
 ### 11.7 Memperbarui Menu
 
 Menunjukkan proses perubahan data menu berdasarkan ID dan hasil perubahan pada database.
 
-**Dokumentasi:** Tambahkan screenshot fitur update menu.
+<img width="490" height="862" alt="image" src="https://github.com/user-attachments/assets/f41e7594-82de-440f-84b9-3d1b58a39d2d" />
 
 ### 11.8 Menghapus Menu
 
 Menunjukkan proses penghapusan menu dan hasil pemeriksaan bahwa data sudah tidak berada di tabel `menu`.
 
-**Dokumentasi:** Tambahkan screenshot fitur hapus menu dan hasil query database.
+<img width="460" height="372" alt="image" src="https://github.com/user-attachments/assets/00a46ebd-527b-46cb-a9f3-2d8ddacdd45a" />
 
 ### 11.9 Hitung Harga Setelah Diskon
 
 Menunjukkan proses mengambil menu dari database dan menghitung harga akhirnya setelah diskon.
 
-**Dokumentasi:** Tambahkan screenshot fitur perhitungan harga setelah diskon.
+<img width="475" height="482" alt="image" src="https://github.com/user-attachments/assets/c8de4349-54ca-4a5d-b2e1-0e4f79c265de" />
 
 ### 11.10 Struktur Package
 
 Menunjukkan struktur package yang terdiri dari `config`, `dao`, `model`, `view`, dan `controller`.
 
-**Dokumentasi:** Tambahkan screenshot struktur project Mini Project 4 di NetBeans.
+<img width="287" height="632" alt="image" src="https://github.com/user-attachments/assets/8e315a9a-03e5-4e8b-bb77-e9d996da4319" />
 
 ---
 
